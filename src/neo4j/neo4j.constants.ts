@@ -1,2 +1,7 @@
 export const NEO4J_CONFIG: string = 'NEO4J_CONFIG'
 export const NEO4J_DRIVER: string = 'NEO4J_DRIVER'
+export const NEO4J_SCHEME: string = 'neo4j'
+export const NEO4J_HOST: string = 'localhost'
+export const NEO4J_PORT: string = '7687'
+export const NEO4J_USERNAME: string = 'neo4j'
+export const NEO4J_PASSWORD: string = 'netfixproject'
