@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <h1 class="title title_fz34">Hello</h1>
   </div>
 </template>
 
