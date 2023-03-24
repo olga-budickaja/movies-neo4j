@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import {CreateUserDto} from "../user/dto/create-user.dto";
-import {UserService} from "../user/user.service";
+import {User, UserService} from "../user/user.service";
 import {EncryptionService} from "../encryption/encryption.service";
+import {JwtService} from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly userService: UserService,
         private readonly encryptionService: EncryptionService,
+        private readonly jwtService: JwtService,
     ) {}
 
     async validateUser(email: string, password: string) {
@@ -28,7 +30,19 @@ export class AuthService {
             createUserDto.firstName,
             createUserDto.lastName
         )
-        return { user: user.properties }
+        return await this.createToken(user)
+    }
+
+    async createToken(user: User) {
+        const { id, email, dateOfBirth, firstName, lastName } = <Record<string, any>> user.properties;
+
+        return {
+            access_token: this.jwtService.sign({
+                sub: id,
+                email, dateOfBirth, firstName, lastName,
+            }),
+        }
+
     }
 
 }

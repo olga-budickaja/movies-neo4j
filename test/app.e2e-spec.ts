@@ -20,6 +20,7 @@ describe('AppController (e2e)', () => {
     describe('Auth', () => {
         const email = `user${Math.random().toString().substring(2)}@gmail.com`;
         const password = Math.random().toString().substring(3);
+        let token
 
         describe('POST /auth/register', () => {
             it('should validate the request', () => {
@@ -52,7 +53,7 @@ describe('AppController (e2e)', () => {
                     })
                     .expect(201)
                     .expect(res => {
-                        console.log(res.body)
+                        expect(res.body.access_token).toBeDefined()
                     })
             })
         })
@@ -80,10 +81,37 @@ describe('AppController (e2e)', () => {
                     .send({email, password})
                     .expect(201)
                     .expect(res => {
-                        expect(res.body.email).toBe(email)
+                        expect(res.body.access_token).toBeDefined()
+                        token = res.body.access_token
                     })
             })
 
+        })
+
+        describe('GET /auth/user', () => {
+            it('should return unauthorized if no token is provided', () => {
+                return request(app.getHttpServer())
+                    .get('/auth/user')
+                    .expect(401)
+            })
+
+            it('should return unauthorized  on incorrect token', () => {
+                return request(app.getHttpServer())
+                    .get('/auth/user')
+                    .set('Authorization', `Bearer incorrect`)
+                    .expect(401)
+            })
+
+            it('should authenticate a user with JWT token', () => {
+                return request(app.getHttpServer())
+                    .get('/auth/user')
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body.email).toBe(email)
+                        expect(res.body.password).toBeUndefined()
+                    })
+            })
         })
     })
 
