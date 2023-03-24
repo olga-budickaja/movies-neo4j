@@ -18,6 +18,9 @@ describe('AppController (e2e)', () => {
     afterEach(() => app.close())
 
     describe('Auth', () => {
+        const email = `user${Math.random().toString().substring(2)}@gmail.com`;
+        const password = Math.random().toString().substring(3);
+
         describe('POST /auth/register', () => {
             it('should validate the request', () => {
                 return request(app.getHttpServer())
@@ -41,8 +44,8 @@ describe('AppController (e2e)', () => {
                     .post('/auth/register')
                     .set('Accept', 'application/json')
                     .send({
-                        email: `user${Math.random().toString().substring(2)}@gmail.com`,
-                        password: '123456',
+                        email,
+                        password,
                         dateOfBirth: '2000-01-01',
                         firstName: 'Adam',
                         lastName: 'Cowley'
@@ -52,6 +55,35 @@ describe('AppController (e2e)', () => {
                         console.log(res.body)
                     })
             })
+        })
+
+        describe('POST /auth/login', () => {
+
+            it('should return 404 if username doesnt exist', () => {
+                return request(app.getHttpServer())
+                    .post('/auth/login')
+                    .send({email: 'unknown', password: 'anything'})
+                    .expect(401)
+            })
+
+            it('should return 404 if password is incorrect', () => {
+                return request(app.getHttpServer())
+                    .post('/auth/login')
+                    .send({email, password: 'anything'})
+                    .expect(res => console.log(res.body))
+                    .expect(401)
+            })
+
+            it('should return 201 if password is incorrect', () => {
+                return request(app.getHttpServer())
+                    .post('/auth/login')
+                    .send({email, password})
+                    .expect(201)
+                    .expect(res => {
+                        expect(res.body.email).toBe(email)
+                    })
+            })
+
         })
     })
 
