@@ -1,17 +1,15 @@
 <template>
-  <div>
-    Hello
-  </div>
+  <UIButton icon="moon"/>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import UHeader from "@/components/layout/UHeader.vue";
+import UIButton from "@/components/UI/UIButton.vue";
 
 @Component({
-  components: {UHeader}
+  components: {UIButton}
 })
-export default class MainPage extends Vue {
+export default class extends Vue {
 
 }
 </script>
