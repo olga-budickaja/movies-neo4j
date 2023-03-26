@@ -1,0 +1,17 @@
+{
+  "some": "Some",
+  "menu": {
+    "home": "Головна",
+    "categories": "Категорії",
+    "discover": "Відкриття",
+    "animation": "Анімації",
+    "ui": "Ui"
+  },
+  "right-menu": {
+    "search": "Пошук...",
+    "login": "Увійти",
+    "logout": "Вийти",
+    "en": "анг",
+    "uk": "ук"
+  }
+}

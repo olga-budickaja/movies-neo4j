@@ -5,7 +5,7 @@
         :key="item.name"
         :class="['list__item', {'list__drop': item.drop}]"
     >
-      <router-link :to="item?.link">{{ item.name }}</router-link>
+      <router-link :to="item?.link">{{ $t(`menu.${item.name}`) }}</router-link>
       <div
           v-if="item.drop"
           :class="['list__wrapp', {show: isMenuDrop}]"
@@ -17,7 +17,7 @@
               class="list__item"
           >
             <router-link :to="dropItem.link">
-              {{ dropItem.name }}
+              {{ $t(`menu.${dropItem.name}`) }}
             </router-link>
           </li>
         </ul>
@@ -29,7 +29,7 @@
             class="list__item"
         >
           <router-link :to="subItem.link">
-            {{ subItem.name }}
+            {{ $t(`menu.${subItem.name}`) }}
           </router-link>
         </li>
       </ul>

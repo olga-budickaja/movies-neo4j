@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import UHeader from '@/components/layout/UHeader.vue';
-import USidebar from "@/components/USidebar.vue";
+import USidebar from "@/components/layout/USidebar.vue";
 
 @Component({
   components: {USidebar, UHeader}

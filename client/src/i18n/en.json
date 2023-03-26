@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "home": "Home",
+    "categories": "Categories",
+    "discover": "Discover",
+    "animation": "Animation",
+    "ui": "Ui"
+  },
+  "right-menu": {
+    "search": "Search...",
+    "login": "Log in",
+    "logout": "Log out",
+    "en": "en",
+    "uk": "uk"
+  }
+}

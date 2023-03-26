@@ -2,7 +2,7 @@
   <div class="search">
     <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
     <input
-        placeholder="Search..."
+        :placeholder="$t('right-menu.search')"
         class="search__input"
     />
   </div>

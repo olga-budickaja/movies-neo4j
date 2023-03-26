@@ -24,3 +24,4 @@ export default class UMenu extends Vue {
 <style scoped>
 
 </style>
+
