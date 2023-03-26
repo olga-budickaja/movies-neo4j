@@ -10,7 +10,7 @@
           <USearch />
           <ULang />
           <ULogin />
-          <UTheme />
+          <UTheme @toggle="toggleTheme" />
         </div>
       </div>
       <button class="header__mobile">
@@ -30,8 +30,10 @@ import USearch from "@/components/USearch.vue";
 import ULang from "@/ULang.vue";
 import ULogin from "@/components/ULogin.vue";
 import UTheme from "@/components/UTheme.vue";
+import {toggleTheme} from "@/utils/change-theme";
 
 @Component({
+  methods: {toggleTheme},
   components: {UTheme, ULogin, ULang, USearch, UMenu, ULogo}
 })
 export default class UHeader extends Vue {

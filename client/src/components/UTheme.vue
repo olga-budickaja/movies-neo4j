@@ -1,5 +1,6 @@
 <template>
-  <UIButton icon="moon"/>
+  <UIButton v-if="!change" icon="sun" @click="handleToggle"/>
+  <UIButton v-else icon="moon" @click="handleToggle"/>
 </template>
 
 <script lang="ts">
@@ -10,6 +11,13 @@ import UIButton from "@/components/UI/UIButton.vue";
   components: {UIButton}
 })
 export default class UTheme extends Vue {
+
+  change = false;
+
+  handleToggle() {
+    this.change = !this.change
+    this.$emit('toggle')
+  }
 
 }
 </script>

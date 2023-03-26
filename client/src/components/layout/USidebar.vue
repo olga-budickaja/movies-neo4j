@@ -2,7 +2,7 @@
   <div :class="['sidebar', {sidebar_isOpen: openSidebar}]">
     <div class="sidebar__top">
       <ULang />
-      <UTheme />
+      <UTheme @toggle="toggleTheme"/>
     </div>
     <USearch />
     <USidebarMenu />
@@ -18,8 +18,10 @@ import UTheme from "@/components/UTheme.vue";
 import USearch from "@/components/USearch.vue";
 import USidebarMenu from "@/components/USidebarMenu.vue";
 import ULogin from "@/components/ULogin.vue";
+import {toggleTheme} from "@/utils/change-theme";
 
 @Component({
+  methods: {toggleTheme},
   components: {ULogin, USidebarMenu, USearch, UTheme, ULang}
 })
 export default class USidebar extends Vue {
