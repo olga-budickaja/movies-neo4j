@@ -9,7 +9,7 @@ import UIButton from "@/components/UI/UIButton.vue";
 @Component({
   components: {UIButton}
 })
-export default class extends Vue {
+export default class UTheme extends Vue {
 
 }
 </script>

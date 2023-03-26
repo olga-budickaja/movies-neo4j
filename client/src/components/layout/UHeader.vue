@@ -14,7 +14,9 @@
         </div>
       </div>
       <button class="header__mobile">
-
+        <button class="header__mobile" @click="handleOpen">
+          <font-awesome-icon icon="fa-solid fa-bars" class="header__icon" />
+        </button>
       </button>
     </div>
   </header>
@@ -32,7 +34,10 @@ import UTheme from "@/components/UTheme.vue";
 @Component({
   components: {UTheme, ULogin, ULang, USearch, UMenu, ULogo}
 })
-export default class extends Vue {
+export default class UHeader extends Vue {
+  handleOpen() {
+    this.$emit('open')
+  }
 
 }
 </script>
@@ -76,6 +81,18 @@ export default class extends Vue {
   &__right {
     display: flex;
     gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .header {
+    padding: 0 20px;
+    &__desktop {
+      display: none;
+    }
+    &__mobile {
+      display: block;
+    }
   }
 }
 </style>
