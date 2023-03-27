@@ -3,6 +3,7 @@ import {CreateUserDto} from "../user/dto/create-user.dto";
 import {User, UserService} from "../user/user.service";
 import {EncryptionService} from "../encryption/encryption.service";
 import {JwtService} from "@nestjs/jwt";
+import {SubscriptionService} from "../subscription/subscription.service";
 
 @Injectable()
 export class AuthService {
@@ -10,6 +11,7 @@ export class AuthService {
         private readonly userService: UserService,
         private readonly encryptionService: EncryptionService,
         private readonly jwtService: JwtService,
+        private readonly subscriptionService: SubscriptionService
     ) {}
 
     async validateUser(email: string, password: string) {
@@ -30,6 +32,9 @@ export class AuthService {
             createUserDto.firstName,
             createUserDto.lastName
         )
+
+        await  this.subscriptionService.createSubscription(user, 0)
+
         return await this.createToken(user)
     }
 

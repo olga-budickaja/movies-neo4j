@@ -8,6 +8,8 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
 import * as process from "process";
 import {Neo4jConfig} from "./neo4j/neo4j-config.interface";
 import { EncryptionModule } from './encryption/encryption.module';
+import { SubscriptionModule } from './subscription/subscription.module';
+import { GenreModule } from './genre/genre.module';
 
 @Module({
     controllers: [AppController],
@@ -31,6 +33,8 @@ import { EncryptionModule } from './encryption/encryption.module';
         AuthModule,
         UserModule,
         EncryptionModule,
+        SubscriptionModule,
+        GenreModule,
     ]
 })
 export class AppModule {}
