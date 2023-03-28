@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {Neo4jConfig} from "./neo4j-config.interface";
 import {NEO4J_CONFIG, NEO4J_DRIVER} from "./neo4j.constants";
-import neo4j, {Driver, Result} from "neo4j-driver";
+import neo4j, {Driver, Result, int} from "neo4j-driver";
 
 @Injectable()
 export class Neo4jService {
@@ -17,6 +17,10 @@ export class Neo4jService {
 
     getConfig(): Neo4jConfig {
         return this.config;
+    }
+
+    int(value: number) {
+        return int(value)
     }
 
     getReadSession(database?: string) {

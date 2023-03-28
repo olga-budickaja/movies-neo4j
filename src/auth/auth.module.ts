@@ -10,25 +10,25 @@ import {JwtStrategy} from "./jwt.strategy";
 import {SubscriptionModule} from "../subscription/subscription.module";
 
 @Module({
-  imports: [
-      JwtModule.registerAsync({
-          imports: [ConfigModule],
-          inject: [ConfigService],
-          useFactory: (configService: ConfigService) => ({
-              secret: configService.get<string>('JWT_SECRET'),
-              signOptions: {
-                  expiresIn: configService.get<string>('JWT_EXPIRES_IN'),
-              },
-          }),
-      }),
-      forwardRef(() => UserModule),
-      EncryptionModule,
-      SubscriptionModule,
-  ],
-  providers: [AuthService, localStrategy, JwtStrategy],
-  controllers: [AuthController],
-  exports: [
-      AuthService
-  ]
+    imports: [
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                secret: configService.get<string>('JWT_SECRET'),
+                signOptions: {
+                    expiresIn: configService.get<string>('JWT_EXPIRES_IN'),
+                },
+            }),
+        }),
+        forwardRef(() => UserModule),
+        EncryptionModule,
+        SubscriptionModule,
+    ],
+    providers: [AuthService, localStrategy, JwtStrategy],
+    controllers: [AuthController],
+    exports: [
+        AuthService
+    ]
 })
 export class AuthModule {}

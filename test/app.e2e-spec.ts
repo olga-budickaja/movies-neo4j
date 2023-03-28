@@ -20,7 +20,7 @@ describe('AppController (e2e)', () => {
     describe('Auth', () => {
         const email = `user${Math.random().toString().substring(2)}@gmail.com`;
         const password = Math.random().toString().substring(3);
-        let token
+        let token, genreId;
 
         describe('POST /auth/register', () => {
             it('should validate the request', () => {
@@ -113,6 +113,75 @@ describe('AppController (e2e)', () => {
                     })
             })
         })
+
+        // describe('GET /genres', () => {
+        //     it('should return unauthorized if no token is provided for genres for user', () => {
+        //         return request(app.getHttpServer())
+        //             .get('/genres')
+        //             .expect(401)
+        //     })
+        //
+        //     it('should return unauthorized  on incorrect token for genres for user', () => {
+        //         return request(app.getHttpServer())
+        //             .get('/genres')
+        //             .set('Authorization', `Bearer incorrect`)
+        //             .expect(401)
+        //     })
+        //
+        //     it('should authenticate a user with JWT token for genres for user', () => {
+        //         return request(app.getHttpServer())
+        //             .get('/genres')
+        //             .set('Authorization', `Bearer ${token}`)
+        //             .expect(200)
+        //             .expect(res => {
+        //                 expect(res.body.length).toEqual(20)
+        //
+        //                 res.body.forEach(row => {
+        //
+        //                     expect(Object.keys(row)).toEqual(
+        //                         expect.arrayContaining(['id', 'name'])
+        //                     )
+        //
+        //                 })
+        //
+        //                 genreId = res.body[0].id
+        //             })
+        //     })
+        // })
+
+        // describe('GET /genres/:id', () => {
+        //     it('should return unauthorized if no token is provided for genres for user', () => {
+        //         return request(app.getHttpServer())
+        //             .get(`/genres/${genreId}`)
+        //             .expect(401)
+        //     })
+        //
+        //     it('should return unauthorized  on incorrect token for genres for user', () => {
+        //         return request(app.getHttpServer())
+        //             .get(`/genres/${genreId}`)
+        //             .set('Authorization', `Bearer incorrect`)
+        //             .expect(404)
+        //     })
+        //
+        //     it('should authenticate a user with JWT token for genres for user', () => {
+        //         return request(app.getHttpServer())
+        //             .get(`/genres/${genreId}`)
+        //             .set('Authorization', `Bearer ${token}`)
+        //             // .expect(200)
+        //             .expect(res => {
+        //                 console.log(res.body)
+        //                 // expect(res?.body.length).toEqual(20)
+        //                 //
+        //                 // res?.body.forEach(row => {
+        //                 //
+        //                 //     expect(Object.keys(row)).toEqual(
+        //                 //         expect.arrayContaining(['id', 'name'])
+        //                 //     )
+        //                 //
+        //                 // })
+        //             })
+        //     })
+        // })
     })
 
 });

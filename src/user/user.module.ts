@@ -6,13 +6,13 @@ import {EncryptionModule} from "../encryption/encryption.module";
 import {SubscriptionModule} from "../subscription/subscription.module";
 
 @Module({
-  providers: [UserService],
-  controllers: [UserController],
-  imports: [
-      forwardRef(() => AuthModule),
-      EncryptionModule,
-      SubscriptionModule,
-  ],
-  exports: [UserService]
+    providers: [UserService],
+    controllers: [UserController],
+    imports: [
+        forwardRef(() => AuthModule),
+        EncryptionModule,
+        SubscriptionModule,
+    ],
+    exports: [UserService]
 })
 export class UserModule {}

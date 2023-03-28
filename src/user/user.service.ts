@@ -18,7 +18,7 @@ export class UserService {
             RETURN u
         `, { email })
 
-       return res.records.length == 1 ? res.records[0].get('u') : undefined;
+        return res.records.length == 1 ? res.records[0].get('u') : undefined;
     };
 
     async create(
