@@ -114,40 +114,40 @@ describe('AppController (e2e)', () => {
             })
         })
 
-        // describe('GET /genres', () => {
-        //     it('should return unauthorized if no token is provided for genres for user', () => {
-        //         return request(app.getHttpServer())
-        //             .get('/genres')
-        //             .expect(401)
-        //     })
-        //
-        //     it('should return unauthorized  on incorrect token for genres for user', () => {
-        //         return request(app.getHttpServer())
-        //             .get('/genres')
-        //             .set('Authorization', `Bearer incorrect`)
-        //             .expect(401)
-        //     })
-        //
-        //     it('should authenticate a user with JWT token for genres for user', () => {
-        //         return request(app.getHttpServer())
-        //             .get('/genres')
-        //             .set('Authorization', `Bearer ${token}`)
-        //             .expect(200)
-        //             .expect(res => {
-        //                 expect(res.body.length).toEqual(20)
-        //
-        //                 res.body.forEach(row => {
-        //
-        //                     expect(Object.keys(row)).toEqual(
-        //                         expect.arrayContaining(['id', 'name'])
-        //                     )
-        //
-        //                 })
-        //
-        //                 genreId = res.body[0].id
-        //             })
-        //     })
-        // })
+        describe('GET /genres', () => {
+            it('should return unauthorised if no token is provided', () => {
+                return request(app.getHttpServer())
+                    .get('/genres')
+                    .expect(401)
+            })
+
+            it('should return unauthorised on incorrect token', () => {
+                return request(app.getHttpServer())
+                    .get('/genres')
+                    .set('Authorization', `Bearer incorrect`)
+                    .expect(401)
+            })
+
+            it('should authenticate a user with the JWT token', () => {
+                return request(app.getHttpServer())
+                    .get('/genres')
+                    .set('Authorization', `Bearer ${token}`)
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body.length).toEqual(20)
+
+                        res.body.forEach(row => {
+                            expect( Object.keys(row) ).toEqual(
+                                expect.arrayContaining(['id', 'name'])
+                            )
+                        })
+
+                        // Assigning genre for nest test
+                        genreId = res.body[0].id
+                    })
+            })
+        })
+
 
         // describe('GET /genres/:id', () => {
         //     it('should return unauthorized if no token is provided for genres for user', () => {

@@ -1,15 +1,19 @@
 import {Controller, Get, Request, UseGuards} from '@nestjs/common';
 import {GenreService} from "./genre.service";
-import {JwtAuthGuard} from "../auth/jwt-auth.guard";
+import {LocalAuthGuard} from "../auth/local-auth.guard";
 
 @Controller('genres')
 export class GenreController {
 
-    constructor(
-        private readonly genreService: GenreService) {}
+    constructor(private readonly genreService: GenreService) {}
 
-    @UseGuards(JwtAuthGuard)
     @Get('/')
+    async getGenres() {
+        return await this.genreService.getGenres()
+    }
+
+    @UseGuards(LocalAuthGuard)
+    @Get('/user')
     async getList(@Request() request) {
         return this.genreService.getGenresForUser(request.user)
     }

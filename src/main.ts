@@ -9,6 +9,13 @@ async function start() {
 
     app.useGlobalPipes(new ValidationPipe());
 
+    app.enableCors({
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+    });
+
     await app.listen(PORT, () => console.log(`Server run on port: ${PORT}`))
 }
 

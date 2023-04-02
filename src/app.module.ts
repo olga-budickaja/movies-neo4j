@@ -10,6 +10,7 @@ import {Neo4jConfig} from "./neo4j/neo4j-config.interface";
 import { EncryptionModule } from './encryption/encryption.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { GenreModule } from './genre/genre.module';
+import { MoviesModule } from './movies/movies.module';
 
 @Module({
     controllers: [AppController],
@@ -35,6 +36,7 @@ import { GenreModule } from './genre/genre.module';
         EncryptionModule,
         SubscriptionModule,
         GenreModule,
+        MoviesModule,
     ]
 })
 export class AppModule {}

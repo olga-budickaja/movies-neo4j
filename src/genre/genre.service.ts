@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Neo4jService } from '../neo4j/neo4j.service';
 import { STATUS_ACTIVE } from '../subscription/subscription.service';
 import {User} from "../user/user.service";
@@ -6,6 +6,7 @@ import {User} from "../user/user.service";
 export interface Genre {
     id: number;
     name: string;
+    numMovies?: number;
 }
 
 @Injectable()
@@ -13,22 +14,44 @@ export class GenreService {
 
     constructor(private readonly neo4jService: Neo4jService) {}
 
+    async getGenres(): Promise<Genre[]> {
+        try {
+            const res = await this.neo4jService.read(`
+                MATCH (g:Genre)<-[:IN_GENRE]-(m:Movie)
+                WITH g, count(m) AS numMovies
+                ORDER BY numMovies DESC
+                RETURN g.id, g.name, numMovies
+        `, {});
+
+         return res.records.map((record: Record<string, any>) => {
+             return {
+                 id: record.get('g.id'),
+                 name: record.get('g.name'),
+                 numMovies: record.get('numMovies'),
+             }
+         })
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     async getGenresForUser(user: User): Promise<Genre[]> {
         const userId: string = (<Record<string, any>> user.properties).id
         const res = await this.neo4jService.read(`
-            MATCH (u:User {id: $userId})-[:PURCHASED]->(s)-[:FOR_PLAN]->(p)
-            WHERE s.expiresAt >= datetime() AND s.status = $status
-            OPTIONAL MATCH  (p)-[:PROVIDES_ACCESS_TO]->(g)<-[:IN_GENRE]-(m)
-            WHERE exists(m.poster)
-            WITH p, g, m ORDER BY g.name, m.releaseDate DESC
-            WITH p, g, collect(m) AS movies
-            WITH p, g, movies[0] as topMovie
-            RETURN p, collect(g {
-                .id,
-                .name,
-                totalMovies: size((g)<-[:IN_GENRE]-()),
-                poster: topMovie.poster
-            }) AS genres
+                MATCH (u:User {id: $userId})-[:PURCHASED]->(s)-[:FOR_PLAN]->(p)
+                WHERE s.expiresAt >= datetime() AND s.status = $status
+                OPTIONAL MATCH (p)-[:PROVIDES_ACCESS_TO]->(g)<-[:IN_GENRE]-(m)
+                WHERE m.poster_path IS NOT NULL
+                WITH p, g, m ORDER BY g.name, m.releaseDate DESC
+                WITH p, g, collect(m) AS movies
+                WITH p, g, movies[0] as topMovie
+                RETURN p, collect({
+                    id: g.id,
+                    name: g.name,
+                    totalMovies: size([(g)<-[:IN_GENRE]-() | 1]),
+                    poster: topMovie.poster
+                }) AS genres
         `, { userId, status: STATUS_ACTIVE })
 
         if ( res.records.length == 0 ) {
